@@ -32,11 +32,13 @@ export async function POST(req: NextRequest) {
       controller.enqueue(encoder.encode(`META:${JSON.stringify(mood)}\n`));
 
       try {
-        const messageStream = anthropic.messages.stream({
-          model: "claude-3-5-sonnet-20241022",
+        const messageStream = await anthropic.messages.create({
+          // Use generally available model; 20241022 may not be enabled on all keys.
+          model: "claude-sonnet-4-20250514",
           max_tokens: 240,
           temperature: 0.5,
           system,
+          stream: true,
           messages: [
             {
               role: "user",
@@ -56,6 +58,7 @@ export async function POST(req: NextRequest) {
           }
         }
       } catch (error) {
+        console.error("Anthropic stream error", error);
         controller.enqueue(encoder.encode("\n[stream error: unable to complete AI response]\n"));
       } finally {
         controller.close();
