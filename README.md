@@ -10,7 +10,11 @@ Small prototype that detects user mood, routes to a supportive or exploratory mo
 npm install
 ```
 
-2. Set your Claude key (keep it in `.env`)
+2. Set your Claude key (keep it in `.env` file)
+
+```
+It is not deployed to GitHub.
+```
 
 3. Start the dev server
 
